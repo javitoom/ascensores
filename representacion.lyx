@@ -90,6 +90,10 @@ Plantas={0,...,n}
 Personas={persona-1,...,persona-n}
 \end_layout
 
+\begin_layout Itemize
+Ascensores={ascensor-1,...,ascensor-n}
+\end_layout
+
 \begin_layout Quotation
 
 \series bold
@@ -100,6 +104,26 @@ B
 
 \begin_layout Part*
 Relaciones rigidas
+\end_layout
+
+\begin_layout Itemize
+planta-objetivo ⊆ Personas
+\end_layout
+
+\begin_layout Itemize
+plantas-disponibles ⊆ Ascensores
+\end_layout
+
+\begin_layout Itemize
+velocidad-ascensor ⊆ Ascensores
+\end_layout
+
+\begin_layout Part*
+Varibles de estados
+\end_layout
+
+\begin_layout Itemize
+planta-actual(p), p ∈ Personas ∪ Ascensores
 \end_layout
 
 \end_body
