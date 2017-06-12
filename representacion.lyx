@@ -79,23 +79,27 @@ Objetos
 \end_layout
 
 \begin_layout Itemize
-Velocidad={lento,rapido}
+Velocidad={lento, rapido}
 \end_layout
 
 \begin_layout Itemize
-Plantas={0,...,n}
+Plantas={0, ..., n}
 \end_layout
 
 \begin_layout Itemize
-Personas={persona-1,...,persona-n}
+Capacidad={0, ..., n}
 \end_layout
 
 \begin_layout Itemize
-Ascensores={ascensor-1,...,ascensor-n}
+Personas={persona-1, ..., persona-n}
 \end_layout
 
 \begin_layout Itemize
-Booleanos = {si , no}
+Ascensores={ascensor-1, ..., ascensor-n}
+\end_layout
+
+\begin_layout Itemize
+Booleanos = {si, no}
 \end_layout
 
 \begin_layout Quotation
@@ -122,12 +126,16 @@ plantas-disponibles ⊆ Ascensores
 velocidad-ascensor ⊆ Ascensores
 \end_layout
 
+\begin_layout Itemize
+capacidad-ascensor ⊆ Ascensores
+\end_layout
+
 \begin_layout Part*
 Varibles de estados
 \end_layout
 
 \begin_layout Itemize
-planta-actual(p), p ∈ Personas
+posicion-actual(p), p ∈ Personas
 \end_layout
 
 \begin_deeper
@@ -136,7 +144,7 @@ planta-actual(p), p ∈ Personas
 \series bold
 Rango
 \series default
-(planta-actual(p)) = Plantas
+(planta-actual(p)) = Plantas ∪ Ascensores
 \end_layout
 
 \end_deeper
@@ -154,12 +162,26 @@ Rango
 \end_layout
 
 \end_deeper
+\begin_layout Itemize
+personas-contenidas(a), a ∈ Ascensores
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+Rango
+\series default
+(personas-contenidas(a)) = Personas
+\end_layout
+
+\end_deeper
 \begin_layout Part*
 Operadores
 \end_layout
 
 \begin_layout Itemize
-viajar(p, a, pl) p ∈ Personas, a ∈ Ascensores, pl ∈ Plantas
+desplazar(a, pl) a ∈ Ascensores, pl ∈ Plantas
 \end_layout
 
 \begin_deeper
@@ -168,10 +190,6 @@ precon
 \end_layout
 
 \begin_deeper
-\begin_layout Itemize
-planta-actual(p) = planta-actual(a)
-\end_layout
-
 \begin_layout Itemize
 pl ⊆ plantas-disponibles(a)
 \end_layout
@@ -188,6 +206,74 @@ planta-actual(p) ← pl
 
 \begin_layout Itemize
 planta-actual(a) ← pl
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+entrar(p, a) p ∈ Personas, a ∈ Ascensor
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+precon
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Size(personas-contenidas(a)) < capacidad-ascensor(a)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$
+\backslash
+overline{p}$
+\end_layout
+
+\end_inset
+
+ ⊆ personas-contenidas(a)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+efectos
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+posicion-actual(p) ← a
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+salir(p, a) p ∈ Personas, a ∈ Ascensor
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+precon
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+p ⊆ personas-contenidas(a)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+efectos
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+posicion-actual(p) ← planta-actual(a)
 \end_layout
 
 \end_deeper
