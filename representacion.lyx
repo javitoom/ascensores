@@ -94,6 +94,10 @@ Personas={persona-1,...,persona-n}
 Ascensores={ascensor-1,...,ascensor-n}
 \end_layout
 
+\begin_layout Itemize
+Booleanos = {si , no}
+\end_layout
+
 \begin_layout Quotation
 
 \series bold
@@ -123,8 +127,70 @@ Varibles de estados
 \end_layout
 
 \begin_layout Itemize
-planta-actual(p), p ∈ Personas ∪ Ascensores
+planta-actual(p), p ∈ Personas
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+Rango
+\series default
+(planta-actual(p)) = Plantas
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+planta-actual(a), a ∈ Ascensores
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+Rango
+\series default
+(planta-actual(a)) = Plantas
+\end_layout
+
+\end_deeper
+\begin_layout Part*
+Operadores
+\end_layout
+
+\begin_layout Itemize
+viajar(p, a, pl) p ∈ Personas, a ∈ Ascensores, pl ∈ Plantas
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+precon
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+planta-actual(p) = planta-actual(a)
+\end_layout
+
+\begin_layout Itemize
+pl ⊆ plantas-disponibles(a)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+efectos
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+planta-actual(p) ← pl
+\end_layout
+
+\begin_layout Itemize
+planta-actual(a) ← pl
+\end_layout
+
+\end_deeper
+\end_deeper
 \end_body
 \end_document
