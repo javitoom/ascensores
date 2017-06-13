@@ -1,5 +1,6 @@
 class Ascensor:
-    def __init__(self, capacidad, plantasDisponibles, plantaActual, velocidad):
+    def __init__(self, numero, capacidad, plantasDisponibles, plantaActual, velocidad):
+        self.numero = numero
         self.capacidad = capacidad
         self.plantasDisponibles = plantasDisponibles
         self.plantaActual = plantaActual
