@@ -47,31 +47,48 @@ class ProblemaAscensores:
         print('Booleanos:', Booleanos)
 
         #Relaciones rigidas-----------------------------------------------------
-        plantaObjetivo = probpl.RelaciónRígida(lambda p: p.plantaObjetivo)
+        planta_Objetivo = probpl.RelaciónRígida(lambda p ,pl: pl in p.plantaObjetivo)
 
-        plantasDisponibles = probpl.RelaciónRígida(lambda a, pl: pl in a.plantasDisponibles)
+        plantas_Disponibles = probpl.RelaciónRígida(lambda a, pl: pl in a.plantasDisponibles)
 
-        velocidadAscensor = probpl.RelaciónRígida(lambda a: a.velocidad)
+        velocidad_Ascensor = probpl.RelaciónRígida(lambda a: a.velocidad)
 
-        capacidadAscensor = probpl.RelaciónRígida(lambda a: a.capacidad)
+        capacidad_Ascensor = probpl.RelaciónRígida(lambda a: a.capacidad)
 
         #Variables de estado----------------------------------------------------
-        posicionPersona = probpl.VariableDeEstados(nombre='posicion-persona({p})', rango=Plantas + Ascensores,
+        posicion_Persona = probpl.VariableDeEstados(nombre='posicion-persona({p})', rango=Plantas + Ascensores,
                                                    p=Personas)
-        posicionAscensor = probpl.VariableDeEstados(nombre='posicion-ascensor({a})', rango=Plantas, a=Ascensor)
-        personasContenidas = probpl.VariableDeEstados(nombre='personas-contenidas({a})', rango=Personas, a=Ascensor)
+        posicion_Ascensor = probpl.VariableDeEstados(nombre='posicion-ascensor({a})', rango=Plantas, a=Ascensores)
+
+        personas_Contenidas = probpl.VariableDeEstados(nombre='personas-contenidas({a})', rango=Personas, a=Ascensores)
+
+        capacidad_Ascensor = probpl.VariableDeEstados(nombre='capacidad_de({a})', rango= Capacidad, a=Ascensores)
 
         # Operadores-----------------------------------------------------
-        # todo
-        desplazar = probpl.Operador(nombre='desplazar({a},{pl})', efectos=[posicionAscensor({'{a}': '{pl}'})]
-                                    , relaciones_rígidas= plantasDisponibles('{a}', '{pl}'),
-                                    a=Ascensor,
+        # El ascensor se desplaza de planta
+        desplazar = probpl.Operador(nombre='desplazar({a},{pl})', efectos=[posicion_Ascensor({'{a}': '{pl}'})]
+                                    , relaciones_rígidas= plantas_Disponibles('{a}', '{pl}'),
+                                    a=Ascensores,
                                     pl=Plantas
                                     )
-        # todo
-        entrar = probpl.Operador(nombre='entrar({p},{a})', precondiciones=[ personasContenidas({'{a}':'{p}'})],
-                                    efectos=[posicionAscensor({'{a}': '{pl}'})],
-                                    a=Ascensor,
+        # La persona se baja del ascensor
+        entrar = probpl.Operador(nombre='entrar({p},{a})', precondiciones=[ personas_Contenidas({'{a}':'{-p}'}),
+                                                                            posicion_Ascensor({'{a}':'{pl}'}),
+                                                                            posicion_Persona({'{p}':'{pl}'}),
+                                                                    capacidad_Ascensor({'{a}': Ascensores.capacidad})],
+                                    efectos=[posicion_Persona({'{p}': '{a}'}),
+                                             capacidad_Ascensor({'{a}' : ascensor.capacidad + 1})],
+                                    a=Ascensores,
                                     pl=Plantas,
                                     p= Personas
+                                 )
+        # La persona sale del ascensor
+        salir = probpl.Operador(nombre='salir({p},{a})', precondiciones=[personas_Contenidas({'{a}': '{p}'}),
+                                                                         posicion_Ascensor({'{a}': '{pl}'})],
+                                 efectos=[posicion_Persona({'{p}': '{pl}'}),
+                                          capacidad_Ascensor({'{a}': ascensor.capacidad - 1})],
+          #Solo si se baja en la planta objetivo------   relaciones_rígidas= plantaObjetivo('{p)','{pl}'),
+                                 a=Ascensores,
+                                 pl=Plantas,
+                                 p=Personas
                                  )
