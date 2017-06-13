@@ -49,17 +49,29 @@ class ProblemaAscensores:
         #Relaciones rigidas-----------------------------------------------------
         plantaObjetivo = probpl.RelaciónRígida(lambda p: p.plantaObjetivo)
 
-        plantasDisponibles = probpl.RelaciónRígida(lambda a: a.plantasDisponibles)
+        plantasDisponibles = probpl.RelaciónRígida(lambda a, pl: pl in a.plantasDisponibles)
 
         velocidadAscensor = probpl.RelaciónRígida(lambda a: a.velocidad)
 
         capacidadAscensor = probpl.RelaciónRígida(lambda a: a.capacidad)
 
         #Variables de estado----------------------------------------------------
-        posicionPersona=probpl.VariableDeEstados(nombre='posicion-persona({p})', rango=Plantas + Ascensores, p=Personas)
+        posicionPersona = probpl.VariableDeEstados(nombre='posicion-persona({p})', rango=Plantas + Ascensores,
+                                                   p=Personas)
         posicionAscensor = probpl.VariableDeEstados(nombre='posicion-ascensor({a})', rango=Plantas, a=Ascensor)
         personasContenidas = probpl.VariableDeEstados(nombre='personas-contenidas({a})', rango=Personas, a=Ascensor)
 
         # Operadores-----------------------------------------------------
-
-    
+        # todo
+        desplazar = probpl.Operador(nombre='desplazar({a},{pl})', efectos=[posicionAscensor({'{a}': '{pl}'})]
+                                    , relaciones_rígidas= plantasDisponibles('{a}', '{pl}'),
+                                    a=Ascensor,
+                                    pl=Plantas
+                                    )
+        # todo
+        entrar = probpl.Operador(nombre='entrar({p},{a})', precondiciones=[ personasContenidas({'{a}':'{p}'})],
+                                    efectos=[posicionAscensor({'{a}': '{pl}'})],
+                                    a=Ascensor,
+                                    pl=Plantas,
+                                    p= Personas
+                                 )
