@@ -135,7 +135,7 @@ class BúsquedaGeneral:
                 return None
             nodo = self.frontera.sacar()
             if self.detallado:
-                print('{0}Nodo: {1}'.format('  ' * nodo.profundidad, nodo))
+                print('\n{0}Nodo: {1}'.format('  ' * nodo.profundidad, nodo))
             if problema.es_estado_final(nodo.estado):
                 return nodo.solución()
             self.explorados.añadir(nodo)

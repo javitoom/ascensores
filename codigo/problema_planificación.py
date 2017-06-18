@@ -1,7 +1,8 @@
-import re
-import itertools
 import copy
-import problema_espacio_estados as probee
+import itertools
+import re
+
+import codigo.problema_espacio_estados as probee
 
 
 class VariableDeEstados:
