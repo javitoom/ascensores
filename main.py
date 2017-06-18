@@ -2,6 +2,9 @@ import codigo.problemaAscensores
 
 
 def main():
+    """
+    Ejecución principal del problema
+    """
     codigo.problemaAscensores.ProblemaAscensores()
 
 

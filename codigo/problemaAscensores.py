@@ -9,6 +9,10 @@ import codigo.variableEstadosAscensor as variables
 
 
 class ProblemaAscensores:
+    """
+    Creación del problema: Objetos, Variables de estado, Relaciones rígidos,
+    Operadores
+    """
     def __init__(self):
 
         num_ascensores = int(input('Numero de ascensores: '))
@@ -65,7 +69,7 @@ class ProblemaAscensores:
             velocidad_ascensor, desplazar, entrar, salir,
             num_personas, num_ascensores, personas)
 
-        # ALGORITMO DE BUSQUEDA
+        # ALGORITMOS DE BUSQUEDA
         options = {0: búsqee.BúsquedaAEstrella(problema_ascensores.h),
                    1: búsqee.BúsquedaEnAnchura(),
                    2: búsqee.BúsquedaEnProfundidad(),

@@ -4,6 +4,9 @@ import codigo.problema_planificación as probpl
 # --------CREACION DE OPERADORES----------
 # Desplazar ascensor:
 class Desplazar(probpl.Operador):
+    """
+    Operador: desplaza los ascensores de una planta a otra
+    """
     def __init__(self, posicion_ascensor, velocidad_ascensor,
                  plantas_disponibles, plantas_diferentes, coste_desplazar,
                  ascensores, plantas, velocidad):
@@ -28,6 +31,9 @@ class Desplazar(probpl.Operador):
 
 # Entrar en el ascensor:
 class Entrar(probpl.Operador):
+    """
+        Operador: entrar un persona en un ascensor
+    """
     def __init__(self, posicion_persona, posicion_ascensor, capacidad_ascensor,
                  capacidad_anterior, ascensores, plantas, personas, capacidad):
         super().__init__(nombre='entrar({p}, {a}, {pl}, {c1}, {c2})',
@@ -53,6 +59,9 @@ class Entrar(probpl.Operador):
 
 # Salir del ascensor:
 class Salir(probpl.Operador):
+    """
+        Operador: sacar a una persona de un ascensor
+    """
     def __init__(self, posicion_persona, posicion_ascensor, capacidad_ascensor,
                  capacidad_siguiente, ascensores, plantas, personas,
                  capacidad):

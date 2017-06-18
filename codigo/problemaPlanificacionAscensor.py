@@ -2,6 +2,9 @@ import codigo.problema_planificación as probpl
 
 
 class ProblemaPlanificacionAscensor(probpl.ProblemaPlanificación):
+    """
+    Problema de planificación ascensores
+    """
     def __init__(self, posicion_ascensor, posicion_persona, capacidad_ascensor,
                  velocidad_ascensor, desplazar, entrar,
                  salir, numPersonas, numAscensores, personas):
@@ -49,6 +52,18 @@ class ProblemaPlanificacionAscensor(probpl.ProblemaPlanificación):
         )
 
     def h(self, nodo):  # h(nodo)
+        """
+        Funcion para calcular la heuristica de cada nodo
+
+        Dos heuristicas definidas:
+
+        1.Numero de personas sin llegar a su objetivo
+
+        2.Suma de las distancias de todas las personas a su objetivo
+
+        :param nodo:
+        :return heuristica:
+        """
         heuristica = 0
         for persona in self.personas:
             if "A" in (nodo.estado.asignaciones[
