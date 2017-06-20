@@ -1,7 +1,5 @@
 import time
 
-from IPython.core.error import InputRejected
-
 import codigo.búsqueda_espacio_estados as búsqee
 import codigo.costeOperadorAscensor as coste
 import codigo.operadorAscensor as operador_ascensor
@@ -71,41 +69,44 @@ class ProblemaAscensores:
             velocidad_ascensor, desplazar, entrar, salir,
             num_personas, num_ascensores, personas)
 
-        # ALGORITMOS DE BUSQUEDA
-        opcion = int(input(
-            '\nSeleccione algoritmo de busqueda\n' +
-            '{0: Búsqueda A*,\n'
-            '1: BúsquedaEnAnchura,\n'
-            '2: BúsquedaEnProfundidad,\n'
-            '3: BúsquedaEnProfundidadAcotada,\n'
-            '4: BúsquedaEnProfundidadIterativa,\n'
-            '5: BúsquedaPrimeroElMejor,\n'
-            '6: búsqee.BúsquedaÓptima}:\n'))
+        while True:
+            # ALGORITMOS DE BUSQUEDA
+            opcion = int(input(
+                '\nSeleccione algoritmo de búsqueda\n' +
+                '{0: Búsqueda A*,\n'
+                '1: BúsquedaEnAnchura,\n'
+                '2: BúsquedaEnProfundidad,\n'
+                '3: BúsquedaEnProfundidadAcotada,\n'
+                '4: BúsquedaEnProfundidadIterativa,\n'
+                '5: BúsquedaPrimeroElMejor,\n'
+                '6: búsqee.BúsquedaÓptima}\n'
+                'Cualquier otro parametro para salir: '))
 
-        if opcion == 0:
-            busqueda = búsqee.BúsquedaAEstrella(problema_ascensores.h,
-                                                detallado=True)
-        elif opcion == 1:
-            busqueda = búsqee.BúsquedaEnAnchura()
-        elif opcion == 2:
-            busqueda = búsqee.BúsquedaEnProfundidad(),
-        elif opcion == 3:
-            busqueda = búsqee.BúsquedaEnProfundidadAcotada(cota=10),
-        elif opcion == 4:
-            busqueda = búsqee.BúsquedaEnProfundidadIterativa(cota_final=10),
-        elif opcion == 5:
-            busqueda = búsqee.BúsquedaPrimeroElMejor(problema_ascensores.h,
-                                                     detallado=True),
-        elif opcion == 6:
-            busqueda = búsqee.BúsquedaÓptima(),
-        else:
-            raise InputRejected('Input no válido')
+            if opcion == 0:
+                busqueda = búsqee.BúsquedaAEstrella(problema_ascensores.h,
+                                                    detallado=True)
+            elif opcion == 1:
+                busqueda = búsqee.BúsquedaEnAnchura()
+            elif opcion == 2:
+                busqueda = búsqee.BúsquedaEnProfundidad()
+            elif opcion == 3:
+                busqueda = búsqee.BúsquedaEnProfundidadAcotada(cota=10)
+            elif opcion == 4:
+                busqueda = búsqee.BúsquedaEnProfundidadIterativa(cota_final=10)
+            elif opcion == 5:
+                busqueda = búsqee.BúsquedaPrimeroElMejor(problema_ascensores.h,
+                                                         detallado=True)
+            elif opcion == 6:
+                busqueda = búsqee.BúsquedaÓptima()
+            else:
+                break
 
-        tiempoActual = time.time()
-        print(busqueda.buscar(problema_ascensores))  # Búsqueda de la solución
-        print()
-        duracion = time.time() - tiempoActual
-        if (int(duracion) > 0):
-            print(int(duracion), 'segundos')
-        else:
-            print(duracion, 'segundos')
+            tiempoActual = time.time()
+            print(busqueda.buscar(
+                problema_ascensores))  # Búsqueda de la solución
+            print()
+            duracion = time.time() - tiempoActual
+            if (int(duracion) > 0):
+                print(int(duracion), 'segundos')
+            else:
+                print(duracion, 'segundos')
