@@ -9,8 +9,9 @@ class PlantasDisponibles(probpl.RelaciónRígida):
     def __init__(self, numAscensores):
         lista_plantas_disponibles = []
         for i in range(numAscensores):
-            print("\nCreación de relación plantas disponibles A" + str(i))
-            plas = set(input("Planta Ej(0 1 2): ").strip().split(" "))
+            print("\nPlantas a las que puede acceder el ascensor A" + str(
+                i) + ' Ej (0 1 2)')
+            plas = set(input("Plantas: ").strip().split(" "))
             for pla in plas:
                 relacion = ('A' + str(i), pla)
                 lista_plantas_disponibles.append(relacion)
