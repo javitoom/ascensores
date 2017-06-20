@@ -5,6 +5,7 @@ class ProblemaPlanificacionAscensor(probpl.ProblemaPlanificación):
     """
     Problema de planificación ascensores
     """
+
     def __init__(self, posicion_ascensor, posicion_persona, capacidad_ascensor,
                  velocidad_ascensor, desplazar, entrar,
                  salir, numPersonas, numAscensores, personas):
@@ -16,13 +17,13 @@ class ProblemaPlanificacionAscensor(probpl.ProblemaPlanificación):
         lista_velocidad_ascensor = {}
         for i in range(numAscensores):
             pla = input(
-                "Planta inicial del ascensor A" + str(i) + ": ").split()
+                "\nPlanta inicial del ascensor A" + str(i) + ": ").split()
             lista_posicion_ascensor['A' + str(i)] = pla[0]
             pla = input(
-                "Capacidad inicial del ascensor A" + str(i) + ": ").split()
+                "\nCapacidad inicial del ascensor A" + str(i) + ": ").split()
             lista_capacidad_ascensor['A' + str(i)] = pla[0]
             pla = input(
-                "Velocidad del ascensor A" + str(
+                "\nVelocidad del ascensor A" + str(
                     i) + "(l/r): ").split()
             lista_velocidad_ascensor['A' + str(i)] = pla[0]
 
@@ -30,10 +31,10 @@ class ProblemaPlanificacionAscensor(probpl.ProblemaPlanificación):
         lista_posicion_persona_objetivo = {}
         for i in range(numPersonas):
             pla = input(
-                "Planta inicial de la persona P" + str(i) + ": ").split()
+                "\nPlanta inicial de la persona P" + str(i) + ": ").split()
             lista_posicion_persona['P' + str(i)] = pla[0]
             pla = input(
-                "Planta objetivo de la persona P" + str(i) + ": ").split()
+                "\nPlanta objetivo de la persona P" + str(i) + ": ").split()
             lista_posicion_persona_objetivo['P' + str(i)] = pla[0]
 
         super().__init__(
@@ -82,7 +83,7 @@ class ProblemaPlanificacionAscensor(probpl.ProblemaPlanificación):
                     self.objetivos[
                         'posicion_persona(' + persona + ')']))
 
-        return heuristica
+        return pow(heuristica, heuristica)
 
         # heuristica = 0
         # for persona in self.personas:
