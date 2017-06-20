@@ -7,6 +7,7 @@ class Desplazar(probpl.Operador):
     """
     Operador: desplaza los ascensores de una planta a otra
     """
+
     def __init__(self, posicion_ascensor, velocidad_ascensor,
                  plantas_disponibles, plantas_diferentes, coste_desplazar,
                  ascensores, plantas, velocidad):
@@ -34,6 +35,7 @@ class Entrar(probpl.Operador):
     """
         Operador: entrar un persona en un ascensor
     """
+
     def __init__(self, posicion_persona, posicion_ascensor, capacidad_ascensor,
                  capacidad_anterior, ascensores, plantas, personas, capacidad):
         super().__init__(nombre='entrar({p}, {a}, {pl}, {c1}, {c2})',
@@ -62,8 +64,9 @@ class Salir(probpl.Operador):
     """
         Operador: sacar a una persona de un ascensor
     """
+
     def __init__(self, posicion_persona, posicion_ascensor, capacidad_ascensor,
-                 capacidad_siguiente, ascensores, plantas, personas,
+                 capacidad_anterior, ascensores, plantas, personas,
                  capacidad):
         super().__init__(nombre='salir({p}, {a}, {pl}, {c1}, {c2})',
                          precondiciones=[
@@ -74,8 +77,8 @@ class Salir(probpl.Operador):
                          efectos=[posicion_persona({'{p}': '{pl}'}),
                                   capacidad_ascensor({'{a}': '{c2}'})
                                   ],
-                         relaciones_rígidas=capacidad_siguiente('{c2}',
-                                                                '{c1}'),
+                         relaciones_rígidas=capacidad_anterior('{c1}',
+                                                               '{c2}'),
                          a=ascensores,
                          pl=plantas,
                          p=personas,
