@@ -5,6 +5,9 @@
 \save_transient_properties true
 \origin unavailable
 \textclass article
+\begin_preamble
+\usepackage[margin=2.5cm]{geometry}
+\end_preamble
 \use_default_options true
 \maintain_unincluded_children false
 \language english
@@ -27,6 +30,7 @@
 \bibtex_command default
 \index_command default
 \paperfontsize default
+\spacing single
 \use_hyperref false
 \papersize default
 \use_geometry false
@@ -53,6 +57,13 @@
 \shortcut idx
 \color #008000
 \end_index
+\leftmargin 2.5cm
+\topmargin 2.5cm
+\rightmargin 2.5cm
+\bottommargin 2.5cm
+\headheight 2.5cm
+\headsep 2.5cm
+\footskip 2.5cm
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation indent
@@ -79,11 +90,11 @@ Objetos
 \end_layout
 
 \begin_layout Itemize
-Velocidad={lento, rapido}
+Ascensores={ascensor-1, ..., ascensor-n}
 \end_layout
 
 \begin_layout Itemize
-Plantas={0, ..., n}
+Velocidad={lento, rapido}
 \end_layout
 
 \begin_layout Itemize
@@ -91,15 +102,11 @@ Capacidad={0, ..., n}
 \end_layout
 
 \begin_layout Itemize
+Plantas={0, ..., n}
+\end_layout
+
+\begin_layout Itemize
 Personas={persona-1, ..., persona-n}
-\end_layout
-
-\begin_layout Itemize
-Ascensores={ascensor-1, ..., ascensor-n}
-\end_layout
-
-\begin_layout Itemize
-Booleanos = {si, no}
 \end_layout
 
 \begin_layout Quotation
@@ -107,7 +114,7 @@ Booleanos = {si, no}
 \series bold
 B
 \series default
-=Velocidad ∪ Plantas ∪ Personas
+=Ascensores ∪ Velocidad ∪ Capacidad ∪ Plantas ∪ Personas
 \end_layout
 
 \begin_layout Part*
@@ -115,27 +122,41 @@ Relaciones rigidas
 \end_layout
 
 \begin_layout Itemize
-planta-objetivo ⊆ Personas
+plantas-diferentes ⊆ Plantas
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+Comprueba que dos plantas son diferentes
+\end_layout
+
+\end_deeper
 \begin_layout Itemize
 plantas-disponibles ⊆ Ascensores
 \end_layout
 
+\begin_deeper
 \begin_layout Itemize
-velocidad-ascensor ⊆ Ascensores
+Comprueba que el ascensor puede viajar hasta esa planta
 \end_layout
 
+\end_deeper
 \begin_layout Itemize
-capacidad-ascensor ⊆ Ascensores
+capacidad-anterior ⊆ Capacidad
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+Comprueba que un capacidad es una unidad menor a otra
+\end_layout
+
+\end_deeper
 \begin_layout Part*
 Varibles de estados
 \end_layout
 
 \begin_layout Itemize
-posicion-actual(p), p ∈ Personas
+posicion-persona(p), p ∈ Personas
 \end_layout
 
 \begin_deeper
@@ -144,12 +165,16 @@ posicion-actual(p), p ∈ Personas
 \series bold
 Rango
 \series default
-(planta-actual(p)) = Plantas ∪ Ascensores
+(posicion-persona(p)) = Plantas ∪ Ascensores
+\end_layout
+
+\begin_layout Itemize
+Devuelve la posicion actual de la persona
 \end_layout
 
 \end_deeper
 \begin_layout Itemize
-planta-actual(a), a ∈ Ascensores
+posicion-ascensor(a), a ∈ Ascensores
 \end_layout
 
 \begin_deeper
@@ -158,12 +183,16 @@ planta-actual(a), a ∈ Ascensores
 \series bold
 Rango
 \series default
-(planta-actual(a)) = Plantas
+(posicion-ascensor(a)) = Plantas
+\end_layout
+
+\begin_layout Itemize
+Devuelve la posicion actual del ascensor
 \end_layout
 
 \end_deeper
 \begin_layout Itemize
-personas-contenidas(a), a ∈ Ascensores
+capacidad-ascensor(a), a ∈ Ascensores
 \end_layout
 
 \begin_deeper
@@ -172,7 +201,44 @@ personas-contenidas(a), a ∈ Ascensores
 \series bold
 Rango
 \series default
-(personas-contenidas(a)) = Personas
+(capacidad-ascensor(a)) = Capacidad
+\end_layout
+
+\begin_layout Itemize
+Devuelve la capacidad actual del ascensor
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+velocidad-ascensor(a), a ∈ Ascensores
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+Rango
+\series default
+(velocidad-ascensor(a)) = Velocidad
+\end_layout
+
+\begin_layout Itemize
+Devuelve la velocidad del ascensor
+\end_layout
+
+\end_deeper
+\begin_layout Part*
+Coste
+\end_layout
+
+\begin_layout Itemize
+coste-desplazar(v, pl1, pl2) v ∈ Velocidad, (pl1, pl2) ∈ Plantas
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Si el ascensor es lento el coste es 6+n y si el ascensor es rapido el coste
+ es 2+3n, siendo n el numero de plantas desplazadas (pl2 - pl1)
 \end_layout
 
 \end_deeper
@@ -181,17 +247,25 @@ Operadores
 \end_layout
 
 \begin_layout Itemize
-desplazar(a, pl) a ∈ Ascensores, pl ∈ Plantas
+desplazar(a, v, pl1, pl2) a ∈ Ascensores, v ∈ Velocidad, (pl1, pl2) ∈ Plantas
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-precon
+Desplazar el ascensor hacia una planta
+\end_layout
+
+\begin_layout Itemize
+precondiciones
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-pl ⊆ plantas-disponibles(a)
+pl1 ⊆ posicion-ascensor(a)
+\end_layout
+
+\begin_layout Itemize
+v ⊆ velocidad-ascensor(a)
 \end_layout
 
 \end_deeper
@@ -201,43 +275,64 @@ efectos
 
 \begin_deeper
 \begin_layout Itemize
-planta-actual(p) ← pl
-\end_layout
-
-\begin_layout Itemize
-planta-actual(a) ← pl
+posicion-ascensor(a) ← pl
 \end_layout
 
 \end_deeper
-\end_deeper
 \begin_layout Itemize
-entrar(p, a) p ∈ Personas, a ∈ Ascensor
+relaciones rígidas
 \end_layout
 
 \begin_deeper
+\begin_layout Itemize
+plantas-disponibles(a, pl1)
+\end_layout
+
+\begin_layout Itemize
+plantas-disponibles(a, pl2)
+\end_layout
+
+\begin_layout Itemize
+plantas-diferentes(pl1,pl2)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+coste
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+coste-desplazar(v, pl1, pl2)
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+entrar(p, a, pl, c1, c2) p ∈ Personas, a ∈ Ascensor, pl ∈ Plantas, (c1,
+ c2) ∈ Cantidad
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Entrar una persona en el ascensor
+\end_layout
+
 \begin_layout Itemize
 precon
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-Size(personas-contenidas(a)) < capacidad-ascensor(a)
+pl ⊆ posicion-persona(p)
 \end_layout
 
 \begin_layout Itemize
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-$
-\backslash
-overline{p}$
+pl ⊆ posicion-ascensor(a)
 \end_layout
 
-\end_inset
-
- ⊆ personas-contenidas(a)
+\begin_layout Itemize
+c2 ⊆ capacidad-ascensor(a)
 \end_layout
 
 \end_deeper
@@ -247,23 +342,50 @@ efectos
 
 \begin_deeper
 \begin_layout Itemize
-posicion-actual(p) ← a
+posicion-persona(p) ← a
+\end_layout
+
+\begin_layout Itemize
+capacidad-ascendor(a) ← c1
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+relaciones rígidas
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+capacidad-anterior(c1, c2)
 \end_layout
 
 \end_deeper
 \end_deeper
 \begin_layout Itemize
-salir(p, a) p ∈ Personas, a ∈ Ascensor
+salir(p, a, pl, c1, c2) p ∈ Personas, a ∈ Ascensor, pl ∈ Plantas, (c1, c2)
+ ∈ Cantidad
 \end_layout
 
 \begin_deeper
+\begin_layout Itemize
+Sacar una persona del ascensor
+\end_layout
+
 \begin_layout Itemize
 precon
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-p ⊆ personas-contenidas(a)
+a ⊆ posicion-persona(p)
+\end_layout
+
+\begin_layout Itemize
+pl ⊆ posicion-ascensor(a)
+\end_layout
+
+\begin_layout Itemize
+c1 ⊆ posicion-ascensor(a)
 \end_layout
 
 \end_deeper
@@ -273,7 +395,21 @@ efectos
 
 \begin_deeper
 \begin_layout Itemize
-posicion-actual(p) ← planta-actual(a)
+posicion-persona(p) ← pl
+\end_layout
+
+\begin_layout Itemize
+capacidad-ascendor(a) ← c2
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+relaciones rígidas
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+capacidad-anterior(c1, c2)
 \end_layout
 
 \end_deeper
