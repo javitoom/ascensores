@@ -45,7 +45,6 @@ class ProblemaAscensores:
             num_ascensores)
         plantas_diferentes = relacion_rigida.PlantasDiferentes()
         capacidad_anterior = relacion_rigida.CapacidadAnterior()
-        capacidad_siguiente = relacion_rigida.CapacidadSiguente()
 
         # --------CREACION DE OPERADORES----------
         # Desplazar ascensor:
@@ -63,7 +62,7 @@ class ProblemaAscensores:
         # Salir del ascensor:
         salir = operador_ascensor.Salir(posicion_persona, posicion_ascensor,
                                         capacidad_ascensor,
-                                        capacidad_siguiente, ascensores,
+                                        capacidad_anterior, ascensores,
                                         plantas, personas, capacidad)
 
         # INSTANCIACION DEL PROBLEMA
